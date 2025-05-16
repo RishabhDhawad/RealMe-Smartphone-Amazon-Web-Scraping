@@ -39,7 +39,7 @@ for page in range(1, 6):
         titles.append(title)
         prices.append(price)
 
-    time.sleep(1)  # polite delay to avoid getting blocked
+    time.sleep(1)  
 
 # Save to Excel
 df = pd.DataFrame({
