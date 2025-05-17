@@ -1,7 +1,10 @@
+'''
+Web Scraping Project
+'''
+import time
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import time
 
 HEADERS = {
     "User-Agent": (
@@ -20,31 +23,49 @@ for page in range(1, 6):
     print(f"Scraping page {page}...")
     url = BASE_URL.format(page)
 
-    response = requests.get(url, headers=HEADERS)
+    response = requests.get(url, headers=HEADERS,  timeout=10)
 
     if response.status_code != 200:
-        print(f"⚠️ Failed to fetch page {page}")
+        print(f"Failed to fetch page {page}")
         continue
 
-    soup = BeautifulSoup(response.content, "lxml")
+    soup = BeautifulSoup(response.content, "html.parser")
     products = soup.find_all("div", {"data-component-type": "s-search-result"})
 
     for product in products:
-        title_tag = product.find("span")
-        price_tag = product.select_one("span.a-price > span.a-offscreen")
+        title_tag = product.h2
+        title = title_tag.text.strip() if title_tag else "No Title"
 
-        title = title_tag.text.strip() if title_tag else "N/A"
-        price = price_tag.text.strip() if price_tag else "N/A"
+
+        price_tag = product.select_one("span.a-price > span.a-offscreen")
+        price = price_tag.text.strip() if price_tag else "No Price"
+
 
         titles.append(title)
         prices.append(price)
 
-    time.sleep(1)  
+    time.sleep(1)
 
-# Save to Excel
+#clean the price string to integers
+def clean_price(price_str):
+    try:
+        price_num = price_str.replace("₹", "").replace(",","").strip()
+        return int(price_num)
+    except (ValueError, AttributeError): 
+        return None
+
+cleaned_prices = [clean_price(p) for p in prices]
+
+# Creating Dataframe
 df = pd.DataFrame({
     "Title": titles,
-    "Price": prices
+    "Price": cleaned_prices
 })
-df.to_excel("realme_smartphones.xlsx", index=False)
-print("✅ Scraping complete. Data saved to realme_smartphones.xlsx")
+
+#filter
+df = df.dropna(subset=["Price"])
+filtered_df = df[df["Price"] > 15000]
+
+
+filtered_df.to_excel("realme_smartphones.xlsx", index=False)
+print("Scraping complete. Data saved to realme_smartphones.xlsx")
