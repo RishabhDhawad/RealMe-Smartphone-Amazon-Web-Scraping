@@ -61,11 +61,41 @@ df = pd.DataFrame({
 
 #filter
 df = df.dropna(subset=["Price"])
-filtered_df = df[df["Price"] > 15000]
 
+# filter phones less than 10k
+df_less_than_10k = df[df["Price"] < 10000]
+
+# filter phone greater than 10,000 less than 20,000 rupees
+df_gtr_than_10k_less_than_20k = df[(df["Price"] > 10000) & (df["Price"] < 20000)]
+
+# filter phone greater than 20,000 less than 30,000 rupees
+df_gtr_than_20k_less_than_30k = df[(df["Price"] > 20000) & (df["Price"] < 30000)] 
+
+# filter phones more than 30k
+df_more_than_30k = df[df["Price"] > 30000]
+
+
+# GENERAL PRINT STATEMENT
 print(f"Titles collected: {len(titles)}")
 print(f"Prices collected: {len(prices)}")
 
-# import pdb; pdb.set_trace()
-filtered_df.to_excel("realme_smartphones.xlsx", index=False)
-print("Scraping complete. Data saved to realme_smartphones.xlsx")
+
+# without any filter
+df.to_excel("all_realmi_phones.xlsx", index=False)
+print("Scraping complete. Data saved to all_realmi_phones.xlsx")
+
+# filter phones less than 10k
+df_less_than_10k.to_excel("realmi_phones_less_than_10k.xlsx", index=False)
+print("Scraping complete. Data saved to realmi_phones_less_than_10k.xlsx")
+
+# filter phone greater than 10,000 less than 20,000 rUpees
+df_gtr_than_10k_less_than_20k.to_excel("realmi_phone_gtr_than_10k_less_than_20k.xlsx", index=False)
+print("Scraping complete. Data saved to realmi_phone_gtr_than_10k_less_than_20k.xlsx")
+
+# filter phone greater than 20,000 less than 30,000 rupees
+df_gtr_than_20k_less_than_30k.to_excel("realmi_phone_gtr_than_20k_less_than_30k.xlsx", index=False)
+print("Scraping complete. Data saved to realmi_phone_gtr_than_20k_less_than_30k.xlsx")
+
+# filter phones more than 30k
+df_more_than_30k.to_excel("realmi_phone_more_than_30k.xlsx", index=False)
+print("Scraping complete. Data saved to realmi_phone_more_than_30k.xlsx")

@@ -1,28 +1,39 @@
 # 📱 Flipkart Realme Smartphones Web Scraper
 
-This project is a Python-based web scraper that extracts data about Realme smartphones listed on Flipkart. The scraper collects product titles and prices, filters smartphones above ₹15,000, and exports the data to an Excel file for further analysis.
+This Python project performs web scraping on **Flipkart** to extract data about **Realme smartphones**, organizing the results into multiple filtered Excel sheets based on price range.
 
----
 
-## 🛠 Features
+## 🔍 Project Overview
 
-- Scrapes multiple pages of Realme smartphones on Flipkart
-- Extracts product titles and prices
-- Cleans and converts prices into integers
-- Filters products priced above ₹15,000
-- Saves the cleaned data into an Excel file (`realme_smartphones.xlsx`)
+- Scrapes product **titles** and **prices** of Realme phones from Flipkart (first 5 pages).
+- Cleans and structures the scraped data into a **Pandas DataFrame**.
+- Filters products based on various price ranges:
+  - Less than ₹10,000
+  - ₹10,001 – ₹19,999
+  - ₹20,001 – ₹29,999
+  - ₹30,000 and above
+- Saves the data into separate **Excel files** for easy analysis.
 
----
 
-## 🧰 Tech Stack
 
-- Python 🐍
-- BeautifulSoup (HTML parsing)
-- Requests (HTTP requests)
-- pandas (data manipulation)
-- openpyxl (Excel file support)
+## 🚀 Technologies Used
 
----
+- `requests` — To fetch HTML content from the web.
+- `BeautifulSoup` — For parsing and extracting data from HTML.
+- `pandas` — For data manipulation and exporting to Excel.
+- `time` — To add delay between page requests and prevent rate-limiting.
+
+
+## 📁 Output Files
+
+After running the script, the following Excel files are generated:
+
+- `all_realmi_phones.xlsx` — All scraped products
+- `realmi_phones_less_than_10k.xlsx`
+- `realmi_phone_gtr_than_10k_less_than_20k.xlsx`
+- `realmi_phone_gtr_than_20k_less_than_30k.xlsx`
+- `realmi_phone_more_than_30k.xlsx`
+
 
 ## ⚙️ Installation & Setup
 
@@ -32,26 +43,26 @@ This project is a Python-based web scraper that extracts data about Realme smart
    cd flipkart-realme-scraper
 
 2. **Create and activate a virtual environment**
-
     ```bash
     python -m venv env
     source env/bin/activate       # On macOS/Linux
     env\Scripts\activate          # On Windows
 
-3 **Install dependencies**
-
+3. **Install Dependencies**
+    ```bash
     pip install -r requirements.txt
 
-4 **Run the scraper**
+4. **Run the scraper**
+    ```bash
+    python scraper.py    
 
-    python scraper.py
+## 🔒 Disclaimer
 
-## 📂 Output
-The script generates a file named:
-    
-    realme_smartphones.xlsx
+- This script is for educational purposes only.
 
-This file will contain the list of Realme smartphones whose prices are above ₹15,000, along with their titles.
+- Flipkart’s website structure may change over time, which could break the scraper.
+
+- Always respect a website’s robots.txt and terms of service.
 
 ## 🔍 Notes
 
@@ -61,16 +72,6 @@ This file will contain the list of Realme smartphones whose prices are above ₹
 
 - If the scraper doesn't collect any data, verify that you're not getting a CAPTCHA or redirection response.
 
-## 📸 Screenshots
-
-| Titles Extracted | Prices Extracted |
-|------------------|------------------|
-| realme Narzo 60X 5G (Green) | ₹15,999          |
-| realme 11X 5G (Purple)       | ₹16,999          |
-| realme 12 Pro+ 5G (Blue)      | ₹28,999          |
-
-## 📌 License
-This project is licensed under the MIT License. Feel free to fork, modify, and use it as needed.
 
 ## 💡 Author
 Made with ❤️ by Rishabh Dhawad
